@@ -61,6 +61,8 @@ insert into canciones values('005','Solita','Sech','Regueton');
 insert into canciones values('006', 'La discusion', 'Sech','Regueton');
 insert into canciones values('007', 'Halo', 'Beyonce','Pop');
 insert into canciones values('008', 'Secreto', 'Anuel','Trap');
+insert into canciones values('010', 'Humble', 'Kendrick L','Trap');
+insert into canciones values('020', 'Vida', 'Canserbero','Rap');
 
 insert into playlist values('0010','Rock & Metal');
 insert into playlist values('0020', 'Rap Real');
@@ -73,6 +75,8 @@ insert into contiene values ('0010','009');
 insert into contiene values ('0010','000');
 insert into contiene values ('0020','001');
 insert into contiene values ('0020','002');
+insert into contiene values ('0020','010');
+insert into contiene values ('0020','020');
 insert into contiene values ('0030','003');
 insert into contiene values ('0030','004');
 insert into contiene values ('0050','005');
@@ -91,8 +95,13 @@ insert into tiene values ('camilom','0060');
 
 
 
+-- Lecturas --
 
-select * 
+select usuario,id_playlist
+from tiene join usuario 
+on tiene.usuario = usuario.nickname;
+
+select *
 from contiene join 
 (select usuario,id_playlist
 from tiene join usuario 
@@ -100,12 +109,54 @@ on tiene.usuario = usuario.nickname) as A
 on contiene.id_playlist = A.id_playlist
 ;
 
+select * 
+from contiene join tiene
+on contiene.id_playlist = tiene.id_playlist;
 
 
-/*
-insert into gusta values ('','');
-insert into gusta values ('','');
-*/
+
+-- Canciones que los usuarios tiene en sus playlists :
+--      Esto sirve para sacar playlists y canciones dado un usuario. 
+create view cancionesYplaylist_usuario as 
+select usuario,nombre as playlist,cancion,autor,genero
+from playlist join (
+select usuario,nombre as cancion, autor, genero, id_playlist,id_cancion
+from canciones join (
+select contiene.id_playlist,id_cancion,usuario 
+from contiene join tiene
+on contiene.id_playlist = tiene.id_playlist) as A
+on canciones.id = A.id_cancion
+order by usuario) as B
+on playlist.id = B.id_playlist
+order by usuario,playlist
+;
+
+/* como aca por ejemplo*/
+select *
+from cancionesYplaylist_usuario;
+
+
+drop view cancionesYplaylist_usuario;
+
+-- Crear un playlist 
+insert into playlist values('','')
+
+-- Añadir cancion a un playlist 
+
+-- Eliminar cancion de un playlist 
+delete from contiene
+where id_canciones = select 
+
+select *
+from contiene join canciones
+on contiene.id_cancion = canciones.id;
+
+
+
+
+
+
+
 
 drop table usuario;
 drop table canciones;
