@@ -1,4 +1,4 @@
 Proyecto de Bases de Datos
 
-Juan Camilo Llanos , Santiago Martinez y Camilo Martinez. \n
-                     2019 - I
+Juan Camilo Llanos , Santiago Martinez y Camilo Martinez.
+2019 - I
