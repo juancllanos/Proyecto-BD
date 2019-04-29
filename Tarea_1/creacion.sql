@@ -1,6 +1,6 @@
 create table usuario
 ( nickname varchar(15),
- email varchar(20),
+ email varchar(30),
  nombre varchar(20),
  contraseña varchar(15),
  primary key(nickname)
