@@ -1,0 +1,38 @@
+--- Dependencias Funcionales ---
+
+  1) nickname --> nombre,email,contraseña.
+  2) id_cancion --> nombre_cancion, autor, genero.
+  3) id_playlist --> nombre_playlist.
+  
+  (S = {nickname, nombre, email, contraseña, id_cancion, nombre_cancion, autor, genero, id_playlist, nombre_playlist}, F)
+  
+  #1 
+    Ri = S
+      alfa_i = id_playlist
+      id_playlist+ = {id_playlist, nombre_playlist} 
+      no está con respecto a esta: id_playlist --> nombre_playlist
+    S = {{nickname, nombre, email, contraseña, id_cancion, nombre_cancion, autor, genero, id_playlist},{id_playlist,
+                  nombre_playlist}}
+  #2
+    Ri = {nickname, nombre, email, contraseña, id_cancion, nombre_cancion, autor, genero, id_playlist}
+         alfa_i = id_cancion
+         id_cancion+ = {id_cancion, nombre_cancion, autor, genero}
+         no está con respecto a esta: id_cancion --> nombre_cancion, autor, genero
+    S = {{id_playlist, nombre_playlist},{nickname, nombre, email, contraseña, id_cancion,id_playlist},{id_cancion,nombre_cancion, 
+                      autor, genero}}
+                      
+ #3  
+  Ri = {nickname, nombre, email, contraseña, id_cancion,id_playlist}
+    alfa_i = nickname
+    nickname+ = {nickname, nombre, email, contraseña}
+    no está con respecto a esta: nickname -->  nombre,email,contraseña
+    
+  S = {{id_playlist, nombre_playlist},{id_cancion,nombre_cancion, autor, genero},{nickname,id_cancion, id_playlist},{nickname,
+            nombre, email, contraseña}}
+            
+ Así estaría en 2da Forma Normal
+    
+         
+         
+  
+  
