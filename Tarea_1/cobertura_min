@@ -1,0 +1,21 @@
+--- Dependencias Funcionales ---
+
+  1) nickname --> nombre,email,contraseña.
+  2) id_cancion --> nombre, autor, genero.
+  3) id_playlist --> nombre_playlist.
+  
+  No existe ningun tipo de dependencia de alfa --> beta1 y alfa --> beta2 entonces no se hace la unión.
+  Luego falta ver que no hayan atributos extraños en beta puesto que en alfa es evidente que no hay ya que son 
+  llaves primarias.
+  Veamos que esto es correcto, tomemos la 1era dependencia.
+  Sea nombre un atributo extraño
+  F' = {F - (1)} U {nickname --> email,contraseña}
+  
+ nickname+ = {nickname, email, contraseña}, observe que nombre no esta en alfa+ luego no es atributo extraño.
+ Podríamos hacer esto para cada dependencia y cada atributo en beta y nos resultaría que ese atributo no estaría en
+ alfa+, luego no hay atributos extraños.
+ 
+ Entonces como no hay atributos extraños ni la condición de la unión antes mencionada F es cobertura mínima.
+  
+  
+
