@@ -4,6 +4,8 @@
   2) id_cancion --> nombre_cancion, autor, genero.
   3) id_playlist --> nombre_playlist.
   
+Verifiquemos :
+  
   (S = {nickname, nombre, email, contraseña, id_cancion, nombre_cancion, autor, genero, id_playlist, nombre_playlist}, F)
   
   #1 
