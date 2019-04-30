@@ -1,3 +1,5 @@
+--- CREACION ---
+
 create table usuario
 ( nickname varchar(15),
  nombre varchar(20),
@@ -95,7 +97,7 @@ insert into tiene values ('camilom','0060');
 
 
 
--- Lecturas --
+-- LECTURAS --
 
 select usuario,id_playlist
 from tiene join usuario 
@@ -114,9 +116,12 @@ from contiene join tiene
 on contiene.id_playlist = tiene.id_playlist;
 
 
+--- FUNCIONES ---
 
--- Canciones que los usuarios tiene en sus playlists :
---      Esto sirve para sacar playlists y canciones dado un usuario. 
+-- 1) Crear un playlist 
+insert into playlists values('00010','Hola')
+
+-- 2) Buscar playlist y/o canciones -- 
 create view cancionesYplaylist_usuario as 
 select usuario,nombre as playlist,cancion,autor,genero
 from playlist join (
@@ -131,6 +136,7 @@ on playlist.id = B.id_playlist
 order by usuario,playlist
 ;
 
+
 /* como aca por ejemplo*/
 select *
 from cancionesYplaylist_usuario;
@@ -138,32 +144,30 @@ from cancionesYplaylist_usuario;
 
 drop view cancionesYplaylist_usuario;
 
--- Crear un playlist 
-insert into playlist values('','')
+-- 3) Añadir cancion a un playlist 
 
--- Añadir cancion a un playlist 
-
--- Eliminar cancion de un playlist 
+-- 4) Eliminar cancion de un playlist 
 delete from contiene
-where id_canciones = select 
+where id_canciones = 
 
 select *
 from contiene join canciones
 on contiene.id_cancion = canciones.id;
 
+-- 5) Recomendaciones 
 
 
 
 
 
-
-
-drop table usuario;
-drop table canciones;
-drop table playlist;
 drop table tiene;
 drop table contiene;
 drop table gusta;
+drop table usuario;
+drop table canciones;
+drop table playlist;
+
+
 
 
 
