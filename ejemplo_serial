@@ -1,0 +1,12 @@
+create table prueba
+	(id SERIAL,
+	 nombre varchar,
+	 primary key(id)
+	);
+	
+insert into prueba(nombre) values('subele');
+insert into prueba(nombre) values('perreo');
+insert into prueba(nombre) values('salsa');
+insert into prueba(nombre) values('decembrinos');
+
+select * from prueba;
