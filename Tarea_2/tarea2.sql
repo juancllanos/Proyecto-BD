@@ -36,7 +36,7 @@ create table contiene
   primary key(id_cancion,id_playlist),
   foreign key (id_cancion) references canciones(id),
  foreign key (id_playlist) references playlist(id)
-);
+);number of columns
 
 
 -- INSERCION --
@@ -61,7 +61,7 @@ insert into canciones values('006', 'La discusion', 'Sech','Regueton');
 insert into canciones values('007', 'Halo', 'Beyonce','Pop');
 insert into canciones values('008', 'Secreto', 'Anuel','Trap');
 insert into canciones values('010', 'Humble', 'Kendrick L','Trap');
-insert into canciones values('020', 'Vida', 'Canserbero','Rap');
+insert into canciones values('020', 'Vida', 'Canserbnumber of columnsero','Rap');
 insert into canciones values('030', 'CachaVSWos', 'FMS','Rap');
 
 select * 
@@ -82,7 +82,7 @@ insert into contiene values (2,'001');
 insert into contiene values (2,'002');
 insert into contiene values (2,'020');
 insert into contiene values (2,'010');
-insert into contiene values (3,'003');
+insert into contiene values (3,'003');number of columns
 insert into contiene values (3,'004');
 insert into contiene values (4,'005');
 insert into contiene values (4,'006');
@@ -132,30 +132,21 @@ from contiene join tiene
 on contiene.id_playlist = tiene.id_playlist;
 <<<<<<< HEAD
 */
-=======
-
->>>>>>> 339f5aa50b0b58bfc9fc7fafdc3f789c0368d766
 
 --- FUNCIONES ---
 
 -- 1) Crear un playlist 
-<<<<<<< HEAD
-insert into playlist(nombre) values( nombre_ingresado_usuario ) -- crear playlist
+insert into playlist(nombre) values( nombre_ingresado_usuario ) 		-- crear playlist
 insert into tiene values(nickname,id_playlist)					-- asociarlo a usuario
 	-- EJ :
 	select count(id)
 	from playlist ;
 	insert into playlist(nombre) values ('Salsa')
-	insert into tiene values('jfperez',(select count(id) from playlist);
+	insert into tiene values('jfperez',(select count(id) from playlist));
 	-- Aca se hace desde java porque para sacar el id del playlist y tomarlo
 	-- como valor en pgadmin es complejo.
 							 
--- 2) Buscar playlist o canciones -- 
-=======
-insert into playlists values('00010','Hola')
-
 -- 2) Buscar playlist y/o canciones -- 
->>>>>>> 339f5aa50b0b58bfc9fc7fafdc3f789c0368d766
 create view cancionesYplaylist_usuario as 
 select usuario,nombre as playlist,cancion,autor,genero
 from playlist join (
@@ -167,7 +158,6 @@ on contiene.id_playlist = tiene.id_playlist) as A
 on canciones.id = A.id_cancion
 order by usuario) as B
 on playlist.id = B.id_playlist
-<<<<<<< HEAD
 order by usuario,playlist;
 	
 select nombre,autor,genero	         -- buscar en todas las canciones
@@ -192,44 +182,18 @@ where playlist = nombre_ing_usuario;
 --drop view cancionesYplaylist_usuario;
 
 -- 3) Añadir cancion a un playlist 
-insert into contiene values (id_playlist, id_cancion)
+insert into contiene values (id_playlist_ing_usuario , id_cancion_ing_usuario);
 	-- Ej:
 		insert into contiene values (1, 001)
 
 -- 4) Eliminar cancion de un playlist 
 delete from contiene
 where id_cancion = id_cancion_ing_usuario
-and id_playlist = id_playlist_ing_usuario 
+and id_playlist = id_playlist_ing_usuario ;
 	-- Ej
 		delete from contiene
 		where id_cancion = '001'
-		and id_playlist = '1' 
-=======
-order by usuario,playlist
-;
-
-
-/* como aca por ejemplo*/
-select *
-from cancionesYplaylist_usuario;
-
-
-drop view cancionesYplaylist_usuario;
-
--- 3) Añadir cancion a un playlist 
-
--- 4) Eliminar cancion de un playlist 
-delete from contiene
-where id_canciones = 
-
-select *
-from contiene join canciones
-on contiene.id_cancion = canciones.id;
-
--- 5) Recomendaciones 
-
->>>>>>> 339f5aa50b0b58bfc9fc7fafdc3f789c0368d766
-
+		and id_playlist = '1' ;
 
 -- 5) Recomendaciones 
 	  select nombre, autor, canciones.genero 
@@ -244,16 +208,22 @@ on contiene.id_cancion = canciones.id;
 	  where usuario = 'jcllanos' and playlist = 'Rap Real' 
 	  group by genero) as A 
 	  on canciones.genero = A.genero;
+      
+	  select * 						
+      from (select nombre, autor, canciones.genero 
+	  from canciones join ( select genero from cancionesYplaylist_usuario 
+	  where usuario = 'jcllanos' and playlist = 'Rap Real' 
+	  group by genero) as A 
+	  on canciones.genero = A.genero) as B except(select cancion,autor,genero from cancionesYplaylist_usuario 
+	  where usuario = 'jcllanos' and playlist = 'Rap Real');
+										
+										
 
 
-<<<<<<< HEAD
 
 
 -- DROPS --
 drop table tiene cascade ;
-=======
-drop table tiene;
->>>>>>> 339f5aa50b0b58bfc9fc7fafdc3f789c0368d766
 drop table contiene;
 drop table gusta;
 drop table usuario;
