@@ -203,11 +203,12 @@ and id_playlist = id_playlist_ing_usuario ;
 	  on canciones.genero = A.genero;
 							 
 	-- Ej 
+          /*					    
 	  select nombre, autor, canciones.genero 
 	  from canciones join ( select genero from cancionesYplaylist_usuario 
 	  where usuario = 'jcllanos' and playlist = 'Rap Real' 
 	  group by genero) as A 
-	  on canciones.genero = A.genero;
+	  on canciones.genero = A.genero;*/
       
 	  select * 						
       from (select nombre, autor, canciones.genero 
