@@ -13,7 +13,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet("/ProyectoBD/funcion1")
+@WebServlet("/ProyectoBD/funcion5")
 public class funcion5 extends HttpServlet{
 
 	public void doGet(HttpServletRequest request,
@@ -23,7 +23,9 @@ public class funcion5 extends HttpServlet{
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		out.println("<HEAD><TITLE>App Musica</TITLE></HEAD>");
+		out.println("<HEAD><TITLE>App Musica</TITLE>");
+	    out.println("<font color=\"#FFFFFF\">");
+	    out.println("</HEAD>");
 		out.println("<BODY>");
 		
 		String nombre_p = request.getParameter("nombre_p");
@@ -33,7 +35,7 @@ public class funcion5 extends HttpServlet{
 		
     	//Intenta establecer conexi�n
     	System.out.println("Estableciendo conexion...");
-        try (Connection conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/proyecto", "postgres", "postgres")) {
+        try (Connection conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Proyecto", "postgres", "postgres")) {
  
             
             System.out.println("Conexion con la base de datos establecida (PostgreSQL)");
@@ -65,24 +67,26 @@ public class funcion5 extends HttpServlet{
           //Verificar que la playlist pertence al usuario:
                 System.out.println("Verificando existencia de cancion y de playlist");
                 System.out.println();
-                //ResultSet resultSet2 = statement.executeQuery("select * from playlist where nombre = '"+nombre_p +"';");
                 ResultSet resultSet3 = statement.executeQuery("select * from cancionesYplaylist_usuario where usuario = '"+nickname +"' and "
                 		+ " playlist = '" + nombre_p + "';");
+                boolean a3 = resultSet3.next();
                 
-                if(resultSet3.next() == true) {
+                if(a3) {
                 	
                 	System.out.println("Confirmacion, el usuario posee dicho playlist");
-                    ResultSet resultSet4= statement.executeQuery("select nombre, autor, canciones.genero from"
-                    		+ " canciones join ( select genero from cancionesYplaylist_usuario where"
-                    		+ " usuario = '" + nickname +"' and playlist = '" + nombre_p + "' group by genero) as A on"
-                    		+ " canciones.genero = A.genero;");
-                   	out.println("<table BORDER COLS=3>");
+                    ResultSet resultSet4= statement.executeQuery("select *  from (select nombre, autor, canciones.genero " 
+                    		+ "	  from canciones join ( select genero from cancionesYplaylist_usuario " 
+                    		+ "	  where usuario = '" + nickname +"' and playlist = '"+ nombre_p +"' group by genero) as A" + 
+                    		"	  on canciones.genero = A.genero) as B except(select cancion,autor,genero from cancionesYplaylist_usuario \n" + 
+                    		"	  where usuario = '" +nickname +"' and playlist = '"+ nombre_p+ "'); ");
+                    
+                	out.println("<table bgcolor = '#FFFFFF' BORDER COLS=3>");
                 		out.println(" <tr> <td>Nombre</td><td>Autor</td>" +
                 				" <td>Genero</td> </tr>");
-                		while(resultSet3.next()) {
-                			out.println("<tr> <td>" + resultSet3.getString("nombre") + "</td>" +
-                					"<td>" + resultSet3.getString("autor") + "</td>" +
-                					"<td>" + resultSet3.getString("genero") + "</td></tr>");
+                		while(resultSet4.next()) {
+                			out.println("<tr> <td>" + resultSet4.getString("nombre") + "</td>" +
+                					"<td>" + resultSet4.getString("autor") + "</td>" +
+                					"<td>" + resultSet4.getString("genero") + "</td></tr>");
                 		}
                 		out.println("</table>");
                 		out.println("<body <body background='https://wallpapercave.com/wp/lwfQm84.jpg'>");
@@ -91,14 +95,13 @@ public class funcion5 extends HttpServlet{
   
                 	
                 }else {
-                	out.println("<h1> Usted no posee dicho playlist o La cancion o la playlist no existen o la cancion no esta en la playlist.</h1>");
+                	out.println("<h1> Usted no posee dicho playlist o la playlist esta vacia.</h1>");
             		out.println("<img src='http://4.bp.blogspot.com/-hmRb2YpGRNk/UR0KU1v49yI/AAAAAAAAAcI/fmjlzmlXFs0/s1600/Error.png'\n" + 
             				"     width='300'\n" + 
             				"     height='300'></br>");
             		out.println("<body <body background='https://wallpapercave.com/wp/lwfQm84.jpg'>");
             		out.println("</BODY>");
-            		out.close();
-                	
+            		out.close();              	
                 }
             
             

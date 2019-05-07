@@ -3,16 +3,16 @@
 create table usuario
 ( nickname varchar(15),
  email varchar(30),
- nombre varchar(20),
- contraseña varchar(15),
+ nombre varchar(30),
+ contraseña varchar(20),
  primary key(nickname)
 );
 
 create table canciones
 ( id varchar (7),
- nombre varchar(20),
- autor varchar(20),
- genero varchar(15),
+ nombre varchar(30),
+ autor varchar(30),
+ genero varchar(20),
   primary key(id)
 );
 
@@ -36,7 +36,7 @@ create table contiene
   primary key(id_cancion,id_playlist),
   foreign key (id_cancion) references canciones(id),
  foreign key (id_playlist) references playlist(id)
-);number of columns
+);
 
 
 -- INSERCION --
@@ -47,8 +47,8 @@ insert into usuario values('camilom', 'cm@hotmail.com','Camilo', '213');
 insert into usuario values('jfperez', 'jfp@hotmail.com','Juan F', '231');
 insert into usuario values('tonystark', 'ts@hotmail.com','Tony Stark', '312');
 
-select *
-from usuario ;
+--select *
+--from usuario ;
 
 insert into canciones values('009','Save me','Queen','Rock');
 insert into canciones values('000', 'We will R', 'Queen','Rock');
@@ -61,7 +61,8 @@ insert into canciones values('006', 'La discusion', 'Sech','Regueton');
 insert into canciones values('007', 'Halo', 'Beyonce','Pop');
 insert into canciones values('008', 'Secreto', 'Anuel','Trap');
 insert into canciones values('010', 'Humble', 'Kendrick L','Trap');
-insert into canciones values('020', 'Vida', 'Canserbnumber of columnsero','Rap');
+insert into canciones values('020', 'Vida', 'Canserbero','Rap');
+insert into canciones values('050', 'Vida', 'Canser','Rap');
 insert into canciones values('030', 'CachaVSWos', 'FMS','Rap');
 
 select * 
@@ -72,6 +73,8 @@ insert into playlist(nombre)  values('Rap Real');
 insert into playlist(nombre)  values('Clasica por gusto');
 insert into playlist(nombre)  values('Perreo');
 insert into playlist(nombre)  values('Preferido');
+insert into playlist(nombre)  values('Prueba');
+insert into playlist(nombre)  values('Prueba 2');
 
 select * 
 from playlist;
@@ -82,13 +85,14 @@ insert into contiene values (2,'001');
 insert into contiene values (2,'002');
 insert into contiene values (2,'020');
 insert into contiene values (2,'010');
-insert into contiene values (3,'003');number of columns
+insert into contiene values (3,'003');
 insert into contiene values (3,'004');
 insert into contiene values (4,'005');
 insert into contiene values (4,'006');
 insert into contiene values (5,'007');
 insert into contiene values (5,'000');
-insert into contiene values (5,'000');
+insert into contiene values (12,'001');
+insert into contiene values (13,'000');
 
 select * 
 from contiene;
@@ -99,6 +103,8 @@ insert into tiene values ('santiagom',1);
 insert into tiene values ('santiagom',3);
 insert into tiene values ('camilom',1);
 insert into tiene values ('camilom',5);
+insert into tiene values ('camilom',12);
+insert into tiene values ('camilom',13);
 
 select * 
 from tiene;
@@ -139,10 +145,12 @@ on contiene.id_playlist = tiene.id_playlist;
 insert into playlist(nombre) values( nombre_ingresado_usuario ) 		-- crear playlist
 insert into tiene values(nickname,id_playlist)					-- asociarlo a usuario
 	-- EJ :
-	select count(id)
+	select max(id)
 	from playlist ;
-	insert into playlist(nombre) values ('Salsa')
-	insert into tiene values('jfperez',(select count(id) from playlist));
+	insert into playlist(nombre) values ('Salsa');
+	--delete from playlist where nombre = 'Salsa';
+	insert into tiene values('jfperez',(select max(id) from playlist));
+	select * from tiene ;
 	-- Aca se hace desde java porque para sacar el id del playlist y tomarlo
 	-- como valor en pgadmin es complejo.
 							 
@@ -159,6 +167,9 @@ on canciones.id = A.id_cancion
 order by usuario) as B
 on playlist.id = B.id_playlist
 order by usuario,playlist;
+										
+										
+select * from cancionesYplaylist_usuario where usuario = 'jcllanos';										
 	
 select nombre,autor,genero	         -- buscar en todas las canciones
 from canciones 
@@ -213,10 +224,10 @@ and id_playlist = id_playlist_ing_usuario ;
 	  select * 						
       from (select nombre, autor, canciones.genero 
 	  from canciones join ( select genero from cancionesYplaylist_usuario 
-	  where usuario = 'jcllanos' and playlist = 'Rap Real' 
+	  where usuario = 'camilom' and playlist = 'Prueba 2' 
 	  group by genero) as A 
 	  on canciones.genero = A.genero) as B except(select cancion,autor,genero from cancionesYplaylist_usuario 
-	  where usuario = 'jcllanos' and playlist = 'Rap Real');
+	  where usuario = 'camilom' and playlist = 'Prueba 2');
 										
 										
 
@@ -226,30 +237,23 @@ and id_playlist = id_playlist_ing_usuario ;
 -- DROPS --
 drop table tiene cascade ;
 drop table contiene;
-drop table gusta;
 drop table usuario;
 drop table canciones;
 drop table playlist;
+drop table prueba;
 
 
+select * 
+from canciones;
 
 
+delete from playlist 
+where nombre = 'Papi';
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select * 
+from tiene join playlist
+on tiene.id_playlist = playlist.id;										
 
 
 
