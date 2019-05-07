@@ -62,8 +62,7 @@ insert into canciones values('007', 'Halo', 'Beyonce','Pop');
 insert into canciones values('008', 'Secreto', 'Anuel','Trap');
 insert into canciones values('010', 'Humble', 'Kendrick L','Trap');
 insert into canciones values('020', 'Vida', 'Canserbero','Rap');
-insert into canciones values('050', 'Vida', 'Canser','Rap');
-insert into canciones values('030', 'CachaVSWos', 'FMS','Rap');
+insert into canciones values('050', 'Vida', 'Canserbero','Rap');
 
 select * 
 from canciones;
@@ -73,8 +72,6 @@ insert into playlist(nombre)  values('Rap Real');
 insert into playlist(nombre)  values('Clasica por gusto');
 insert into playlist(nombre)  values('Perreo');
 insert into playlist(nombre)  values('Preferido');
-insert into playlist(nombre)  values('Prueba');
-insert into playlist(nombre)  values('Prueba 2');
 
 select * 
 from playlist;
@@ -103,8 +100,6 @@ insert into tiene values ('santiagom',1);
 insert into tiene values ('santiagom',3);
 insert into tiene values ('camilom',1);
 insert into tiene values ('camilom',5);
-insert into tiene values ('camilom',12);
-insert into tiene values ('camilom',13);
 
 select * 
 from tiene;
@@ -136,7 +131,6 @@ on contiene.id_playlist = A.id_playlist
 select * 
 from contiene join tiene
 on contiene.id_playlist = tiene.id_playlist;
-<<<<<<< HEAD
 */
 
 --- FUNCIONES ---
@@ -151,8 +145,7 @@ insert into tiene values(nickname,id_playlist)					-- asociarlo a usuario
 	--delete from playlist where nombre = 'Salsa';
 	insert into tiene values('jfperez',(select max(id) from playlist));
 	select * from tiene ;
-	-- Aca se hace desde java porque para sacar el id del playlist y tomarlo
-	-- como valor en pgadmin es complejo.
+
 							 
 -- 2) Buscar playlist y/o canciones -- 
 create view cancionesYplaylist_usuario as 
@@ -169,7 +162,7 @@ on playlist.id = B.id_playlist
 order by usuario,playlist;
 										
 										
-select * from cancionesYplaylist_usuario where usuario = 'jcllanos';										
+--select * from cancionesYplaylist_usuario where usuario = 'jcllanos';										
 	
 select nombre,autor,genero	         -- buscar en todas las canciones
 from canciones 
@@ -207,22 +200,18 @@ and id_playlist = id_playlist_ing_usuario ;
 		and id_playlist = '1' ;
 
 -- 5) Recomendaciones 
-	  select nombre, autor, canciones.genero 
+	  select * 						
+      	  from (select nombre, autor, canciones.genero 
 	  from canciones join ( select genero from cancionesYplaylist_usuario 
-	  where usuario = usuario_ing and playlist = nombre_playlist_ing 
+	  where usuario = usuario_ing and playlist = playlist_ing 
 	  group by genero) as A 
-	  on canciones.genero = A.genero;
+	  on canciones.genero = A.genero) as B except(select cancion,autor,genero from cancionesYplaylist_usuario 
+	  where usuario = usuario_ing and playlist = playlist_ing);
 							 
 	-- Ej 
-          /*					    
-	  select nombre, autor, canciones.genero 
-	  from canciones join ( select genero from cancionesYplaylist_usuario 
-	  where usuario = 'jcllanos' and playlist = 'Rap Real' 
-	  group by genero) as A 
-	  on canciones.genero = A.genero;*/
       
 	  select * 						
-      from (select nombre, autor, canciones.genero 
+          from (select nombre, autor, canciones.genero 
 	  from canciones join ( select genero from cancionesYplaylist_usuario 
 	  where usuario = 'camilom' and playlist = 'Prueba 2' 
 	  group by genero) as A 
@@ -247,8 +236,7 @@ select *
 from canciones;
 
 
-delete from playlist 
-where nombre = 'Papi';
+
 
 
 select * 
